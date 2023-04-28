@@ -1,2 +1,15 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<h2>プロフィール編集</h2>
+<%= form_with model: @user do |f| %>
+  <label for = "inputName">Name</label>
+  <%# label for “for”属性は“label”要素の外にあるラベル付け可能要素を“label”要素と関連付ける属性 %>
+  <%# “for”属性の値には“label”要素を関連付けるラベル付け可能要素の“id”属性の値を指定 %>
+  <%= f.text_field :name, autofocus: true, id:"input", placeholder:"名前" %>
+  <%# 「autofocus: true」とはページを読み込んだらすぐにautofocus属性を記述している部分にカーソルが移動して入力状態になる %>
+  <%# placeholderを使えば、入力フォームにあらかじめ薄いテキストで「佐藤 太郎」のように記入される %>
+  <label for = "inputImage">ProfileImage</label>
+  <%= f.file_field :profile_image, placeholder: "プロフィール画像", accept: "image/*" %>
+  <%# accept 属性は、サーバが受け取ることが可能なファイルの種別を指定する %>
+  <%# accept: "image/*" 形式は問わず、画像だけを受け入れたい場合 %>
+  <%# 拡張子による指定も可能 accept=".jpg" また、値はカンマ区切りで複数指定できる %>
+  <%= f.submit "変更を保存" %>
+<% end %>
