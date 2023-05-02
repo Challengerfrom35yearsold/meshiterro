@@ -2,35 +2,89 @@
 <html>
   <head>
     <title>Meshiterro</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <header>
-      <% if user_signed_in? %>
-        <li>
-          <%= link_to "投稿フォーム", new_post_image_path %>
-        </li>
-        <li>
-          <%= link_to "マイページ", user_path(current_user.id) %>
-        </li>
-        <li>
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-        </li>
-      <% else %>
-        <li>
-          <%= link_to "新規登録", new_user_registration_path %>
-        </li>
-        <li>
-          <%= link_to "ログイン", new_user_session_path %>
-        </li>
-      <% end %>
+   <body class="d-flex flex-column vh-100">
+  <%# d-flex ディスプレイフレックス
+  flex-column 要素を盾に並ばせる
+  vh-100　ビューポートのハイトを100に設定している %>
+    <header class="shadow-sm">
+    <%# 小さい影%>
+      <nav class="navbar navbar-expand-lg navbar-light">
+      <%# navbar ナビゲーションバーの表示
+      navbar-expand-[ブレークポイント]指定したブレークポイント（画面幅）に応じてナビゲーションバー、ナビゲーションアイコン（ハンバーガーメニュー）を切り替えて表示できる
+      navbar-[カラースキーム]　lightがカラースキーム(色によって指定あり) %>
+        <div class="container">
+          <a class="navbar-brand p-3" href="/"><%= image_tag('logo.png') %></a>
+          <%# navbar-brand ロゴに使用されるnavbarのサポートclass
+          p-[サイズ] paddingの指定 m-[サイズ] marginの指定%>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          <%# navbar-toggler ナビゲーションアイコンの枠部分
+          navbar-toggler-icon ナビゲーションアイコンの三本線部分
+          ※この三本線はnavbar-toggler-iconのclassに対してbackground-imageで画像が割り当てられている%>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <%# ナビゲーションアイコンの開閉する動作 %>
+
+          <ul class="navbar-nav ml-auto">
+          <%# <div class="navbar-nav">」タグ内にメニューの内容を追加する %>
+          <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
+            <%# .table-dark を適用すると, 色を反転することもできる。背景に暗くしてテキストを明るくすることも出来る %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "投稿フォーム", new_post_image_path, class: 'nav-link text-dark' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "マイページ", user_path(current_user.id), class: 'nav-link text-dark' %>
+          </li>
+          <% else %>
+            <li class="nav-item">
+                <%= link_to "新規登録", new_user_registration_path, class: 'nav-link text-dark' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "ログイン", new_user_session_path, class: 'nav-link text-dark' %>
+            </li>
+            <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
+    <main class="mb-auto">
     <%= yield %>
+    </main>
+
+    <footer class="bg-dark text-white pt-5 pb-4">
+      <div class="container">
+        <div class="row no-gutters">
+        <%# no-gutters .row のネガティブ margin が削除され、すべての子カラムで水平方向の パディング が削除される %>
+          <div class="col-md-4">
+            <p>善良な市民同士で無差別に食欲を煽るSNS</p>
+            <%= image_tag('logo-white.png') %>
+          </div>
+          <div class="col-md-8">
+            <h6 class="text-white mt-2 mb-3">Link</h6>
+            <ul class="p-0 list-unstyled">
+            <%# .list-unstyled を追加して, ブラウザのデフォルトリストスタイルを削除 %>
+              <li>
+                <a href="" title="About" class="text-white-50">会社概要</a>
+              </li>
+              <li>
+                <a href="" title="License informations" class="text-white-50">プライバシーポリシー</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
